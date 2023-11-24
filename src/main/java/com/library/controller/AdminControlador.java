@@ -38,7 +38,7 @@ public class AdminControlador {
     @GetMapping("/libros/nuevo")
     public ModelAndView mostrarFormularioDeNuevoLibro(){
         List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
-        System.out.println("Entró en mostrarFormularioDeNuevoLibro");
+
         return new ModelAndView("admin/nuevo-libro")
                 .addObject("libro",new Libro())
                 .addObject("generos",generos);
