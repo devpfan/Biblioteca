@@ -38,37 +38,8 @@
 </nav>
 
 <div class="container my-5">
-    <h2>Libros</h2>
-    <div class="text-end">
-        <a href="/admin/libros/nuevo" class="btn btn-primary mb-3">Agregar Libro</a>
-    </div>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th></th>
-            <th>Libros</th>
-            <th>F.Lanzamiento</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="libro : ${libros}" th:object="${libros}">
-            <td></td>
-            <td>
-                <div th:text="*{titulo}" class="fs-5 fw-bold"></div>
-                <p th:text="*{sinopsis}"></p>
-                <div>
-                        <span class="badge rounded-pill bg-light text-dark me-1" th:each="genero: ${generos}"
-                              th:text="${genero.titulo}">
-                        </span>
-                </div>
-            </td>
 
-            <td th:text="*{#temporals.format(fechaLanzamiento,'dd/MM/yyyy'}"></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
+
 </div>
 
 
