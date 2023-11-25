@@ -11,7 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
@@ -43,4 +46,11 @@ public class AdminControlador {
                 .addObject("libro",new Libro())
                 .addObject("generos",generos);
     }
+
+    @PostMapping("/libros/nuevo")
+    public ModelAndView registrarLibro(@Validated Libro libro, BindingResult bindingResult){
+        if(bindingResult.hasErrors()
+
+    }
+
 }
