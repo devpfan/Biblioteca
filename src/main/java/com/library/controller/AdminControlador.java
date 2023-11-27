@@ -49,8 +49,21 @@ public class AdminControlador {
 
     @PostMapping("/libros/nuevo")
     public ModelAndView registrarLibro(@Validated Libro libro, BindingResult bindingResult){
-        if(bindingResult.hasErrors()
+        if(bindingResult.hasErrors() || libro.getPortada().isEmpty()){
+            if (libro.getPortada().isEmpty()){
+                bindingResult.rejectValue("portada","MultipartNotEmpty");
+            }
+            List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
+            return new ModelAndView("admin/nuevo-libro")
+                    .addObject("libro",libro)
+                    .addObject("generos",generos);
+        }
 
+        String rutaPortada = servicio.almacenarArchivo(libro.getPortada());
+        libro.setRutaPortada(rutaPortada);
+
+        libroRepository.save(libro);
+        return new ModelAndView("redirect:/admin");
     }
 
 }

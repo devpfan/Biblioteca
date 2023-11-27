@@ -53,13 +53,13 @@
 
         <div class="mb-3">
             <label for="sinopsis" class="form-label">Sinopsis: </label>
-            <input type="text" id="sinopsis" placeholder="Digita la sinopsis" class="form-control" th:field="*{sinopsis}">
+            <textarea id="sinopsis" placeholder="Digita la sinopsis" class="form-control" th:field="*{sinopsis}"></textarea>
             <div class="invalid-feedback" th:if="${#fields.hasErrors('sinopsis')} " th:errors="*{sinopsis}"></div>
         </div>
 
         <div class="mb-3">
             <label for="fechaPublicacion" class="form-label">Fecha de
-                publicacion:</label> <input type="text" id="fechaPublicacion"
+                publicacion:</label> <input type="date" id="fechaPublicacion"
                    placeholder="Ingresa la fecha de publicacion" class="form-control"
                    th:field="*{fechaPublicacion}">
             <div class="invalid-feedback"
@@ -69,7 +69,7 @@
 
         <div class="mb-3">
             <label for="reviewId" class="form-label">Review del libro: </label>
-            <input type="text" id="reviewId" placeholder="XDXDXD" class="form-control" th:field="*{reviewId}">
+            <input type="text" id="reviewId" placeholder="Reseña" class="form-control" th:field="*{reviewId}">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('reviewId')} " th:errors="*{reviewId}"></div>
         </div>
 
@@ -81,8 +81,8 @@
 
         <div class="mb-3">
             <label for="generos" class="form-label">Genero: </label>
-            <select id="generos" class="form-control" th:fields="*{generos}" multiple>
-                <option th:each="genero: ${generos}" th:value="#{genero.id}" th:text="${genero.titulo}"></option>
+            <select id="generos" class="form-control" th:field="*{generos}" multiple>
+                <option th:each="genero: ${generos}" th:value="${genero.id}" th:text="${genero.titulo}"></option>
             </select>
             <div class="invalid-feedback" th:if="${#fields.hasErrors('generos')} " th:errors="*{generos}"></div>
         </div>
