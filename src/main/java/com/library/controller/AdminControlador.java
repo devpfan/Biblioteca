@@ -32,10 +32,12 @@ public class AdminControlador {
     @Autowired
     private AlmacenServicioImpl servicio;
 
+
+
     @GetMapping("")
     public ModelAndView verPaginaDeInicio(@PageableDefault(sort ="titulo", size = 5)Pageable pageable){
         Page<Libro> libros = libroRepository.findAll(pageable);
-        return new ModelAndView("index").addObject("libros", libros);
+        return new ModelAndView("admin/index").addObject("libros", libros);
     }
 
     @GetMapping("/libros/nuevo")

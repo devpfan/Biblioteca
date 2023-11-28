@@ -1,19 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="es">
+<html xmlns:th="https://www.thymeleaf.org" lang="es"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Administracion</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
-    <style>
-        form .invalid-feedback{
-            display:block;
-        }
-    </style>
-
+    <title>Registro de libros</title>
 </head>
 <body>
 
@@ -26,74 +17,70 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
                 <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="/libro">Libros</a></li>
                 <li class="nav-item"><a class="nav-link" href="/admin">Administración</a></li>
-
             </ul>
-
         </div>
     </div>
 </nav>
 
-<div class="container my-5">
+ <div layout:fragment="content">
+         <h2>Registro de libro</h2>
+         <br>
+         <form action="" method="post" th:object="${libro}"
+               enctype="multipart/form-data">
+             <div class="mb-3">
+                 <label for="titulo" class="form-label">Titulo: </label> <input
+                     type="text" id="titulo" placeholder="Digita el titulo"
+                     class="form-control" th:field="*{titulo}">
+                 <div class="invalid-feedback" th:if="${#fields.hasErrors('titulo')}"
+                      th:errors="*{titulo}"></div>
+             </div>
 
-    <h2>Registro de libro</h2>
-    <br>
-    <form action="" method="post" th:object="${libro}"
-          enctype="multipart/form-data">
-        <div class="mb-3">
-            <label for="titulo" class="form-label">Titulo: </label> <input
-                type="text" id="titulo" placeholder="Digita el titulo"
-                class="form-control" th:field="*{titulo}">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('titulo')}"
-                 th:errors="*{titulo}"></div>
-        </div>
+             <div class="mb-3">
+                 <label for="sinopsis" class="form-label">Sinopsis: </label>
+                 <textarea id="sinopsis" placeholder="Digita la sinopsis" class="form-control" th:field="*{sinopsis}"></textarea>
+                 <div class="invalid-feedback" th:if="${#fields.hasErrors('sinopsis')} " th:errors="*{sinopsis}"></div>
+             </div>
 
-        <div class="mb-3">
-            <label for="sinopsis" class="form-label">Sinopsis: </label>
-            <textarea id="sinopsis" placeholder="Digita la sinopsis" class="form-control" th:field="*{sinopsis}"></textarea>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('sinopsis')} " th:errors="*{sinopsis}"></div>
-        </div>
+             <div class="mb-3">
+                 <label for="fechaPublicacion" class="form-label">Fecha de
+                     publicacion:</label> <input type="date" id="fechaPublicacion"
+                                                 placeholder="Ingresa la fecha de publicacion" class="form-control"
+                                                 th:field="*{fechaPublicacion}">
+                 <div class="invalid-feedback"
+                      th:if="${#fields.hasErrors('fechaPublicacion')}"
+                      th:errors="*{fechaPublicacion}"></div>
+             </div>
 
-        <div class="mb-3">
-            <label for="fechaPublicacion" class="form-label">Fecha de
-                publicacion:</label> <input type="date" id="fechaPublicacion"
-                   placeholder="Ingresa la fecha de publicacion" class="form-control"
-                   th:field="*{fechaPublicacion}">
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('fechaPublicacion')}"
-                 th:errors="*{fechaPublicacion}"></div>
-        </div>
+             <div class="mb-3">
+                 <label for="reviewId" class="form-label">Review del libro: </label>
+                 <input type="text" id="reviewId" placeholder="Reseña" class="form-control" th:field="*{reviewId}">
+                 <div class="invalid-feedback" th:if="${#fields.hasErrors('reviewId')} " th:errors="*{reviewId}"></div>
+             </div>
 
-        <div class="mb-3">
-            <label for="reviewId" class="form-label">Review del libro: </label>
-            <input type="text" id="reviewId" placeholder="Reseña" class="form-control" th:field="*{reviewId}">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('reviewId')} " th:errors="*{reviewId}"></div>
-        </div>
+             <div class="mb-3">
+                 <label for="portada" class="form-label">Portada </label>
+                 <input type="file" name="portada" id="portada" class="form-control" th:field="*{portada}">
+                 <div class="invalid-feedback" th:if="${#fields.hasErrors('portada')} " th:errors="*{portada}"></div>
+             </div>
 
-        <div class="mb-3">
-            <label for="portada" class="form-label">Portada </label>
-            <input type="file" name="portada" id="portada" class="form-control" th:field="*{portada}">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('portada')} " th:errors="*{portada}"></div>
-        </div>
+             <div class="mb-3">
+                 <label for="generos" class="form-label">Genero: </label>
+                 <select id="generos" class="form-control" th:field="*{generos}" multiple>
+                     <option th:each="genero: ${generos}" th:value="${genero.id}" th:text="${genero.titulo}"></option>
+                 </select>
+                 <div class="invalid-feedback" th:if="${#fields.hasErrors('generos')} " th:errors="*{generos}"></div>
+             </div>
 
-        <div class="mb-3">
-            <label for="generos" class="form-label">Genero: </label>
-            <select id="generos" class="form-control" th:field="*{generos}" multiple>
-                <option th:each="genero: ${generos}" th:value="${genero.id}" th:text="${genero.titulo}"></option>
-            </select>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('generos')} " th:errors="*{generos}"></div>
-        </div>
-
-        <div class="text-end">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
+             <div class="text-end">
+                 <button type="submit" class="btn btn-primary">Guardar</button>
+             </div>
+         </form>
 
 
-    </form>
-</div>
+ </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.fancybox.min.js"></script>
