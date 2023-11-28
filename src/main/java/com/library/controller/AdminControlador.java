@@ -70,13 +70,37 @@ public class AdminControlador {
     }
 
     @GetMapping("/libros/{id}/editar")
-    public ModelAndView editarLibro(@PathVariable Integer id){
+    public ModelAndView mostrarFormularioEditarLibro(@PathVariable Integer id){
         Libro libro = libroRepository.getOne(id);
         List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
 
         return new ModelAndView("admin/editar-libro")
                 .addObject("libro",libro)
                 .addObject("generos",generos);
+    }
+
+    @PostMapping("/libros/{id}/editar")
+    public ModelAndView actualizarLibro(@PathVariable Integer id, @Validated Libro libro, BindingResult bindingResult){
+            if(bindingResult.hasErrors()){
+                List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
+                return new ModelAndView("admin/editar-libro")
+                        .addObject("libro",libro)
+                        .addObject("generos",generos);
+             }
+            Libro libroDB = libroRepository.getOne(id);
+            libroDB.setTitulo(libro.getTitulo());
+            libroDB.setSinopsis(libro.getSinopsis());
+            libroDB.setFechaPublicacion(libro.getFechaPublicacion());
+            libroDB.setReviewId(libro.getReviewId());
+            libroDB.setGeneros(libro.getGeneros());
+
+            if (!libro.getPortada().isEmpty()){
+                servicio.eliminarArchivo(libroDB.getRutaPortada());
+                String rutaPortada = servicio.almacenarArchivo(libro.getPortada());
+                libroDB.setRutaPortada(rutaPortada);
+        }
+            libroRepository.save(libroDB);
+        return new ModelAndView("redirect:/admin");
     }
 
 }
