@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="es"
+<html xmlns:th="https://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{master.html}">
 <head>
     <meta charset="UTF-8">
     <title>administrar Biblioteca</title>
+
+    <!-- bibliotecas de Fancybox -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
 </head>
 <body>
 
@@ -27,21 +34,25 @@
                 <tbody>
                 <tr th:each="libro : ${libros}" th:object="${libro}">
                     <td style="width:150px;">
-                        <a th:href="@{/assets/{filename}(filename=*{rutaPortada})}" data-fancybox></a>
-                        <img th:src="@{/assets/{filename}(filename=*{rutaPortada})}" alt="" class="img-thumbnail w-100">
+                        <a th:href="@{/assets/{filename}(filename=*{rutaPortada})}" data-fancybox>
+                           <img th:src="@{/assets/{filename}(filename=*{rutaPortada})}" alt="" class="img-thumbnail w-100">
+                        </a>
                     </td>
                     <td>
                         <div th:text="*{titulo}" class="fs-5 fw-bold"></div>
                         <p th:text="*{sinopsis}"></p>
                         <div>
-                        <span class="badge rounded-pill bg-light text-dark me-1" th:each="genero : ${generos}"
-                              th:text="${genero.titulo}">
+                        <span class="badge rounded-pill bg-light text-dark me-1"
+                              th:each="genero : *{generos}" th:text="${genero.titulo}">
                         </span>
                         </div>
                     </td>
 
                     <td th:text="*{#temporals.format(fechaPublicacion,'dd/MM/yyyy')}"></td>
-                    <td></td>
+
+                    <td class="text-end">
+                        <a th:href="@{/admin/libros/{id}/editar(id=*{id})}">Editar</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

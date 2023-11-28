@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -66,6 +67,16 @@ public class AdminControlador {
 
         libroRepository.save(libro);
         return new ModelAndView("redirect:/admin");
+    }
+
+    @GetMapping("/libros/{id}/editar")
+    public ModelAndView editarLibro(@PathVariable Integer id){
+        Libro libro = libroRepository.getOne(id);
+        List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
+
+        return new ModelAndView("admin/editar-libro")
+                .addObject("libro",libro)
+                .addObject("generos",generos);
     }
 
 }

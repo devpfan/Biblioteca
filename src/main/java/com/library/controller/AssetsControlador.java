@@ -15,7 +15,7 @@ public class AssetsControlador {
     @Autowired
     private AlmacenServicioImpl servicio;
 
-    @GetMapping("/filename:.+")
+    @GetMapping("/{filename:.+}")
     public Resource obtenerRecurso(@PathVariable("filename")String filename){
             return servicio.cargarComoRecurso(filename);
     }
