@@ -49,17 +49,28 @@
                     </td>
 
                     <td th:text="*{#temporals.format(fechaPublicacion,'dd/MM/yyyy')}"></td>
-
                     <td class="text-end">
                         <a th:href="@{/admin/libros/{id}/editar(id=*{id})}">Editar</a>
+                        <a href="javascript:void(0)" class="text-danger ms-3" th:onclick="'eliminarLibro(' + *{id} +')'">Eliminar</a>
+                        <form th:id="'eliminarLibroForm' + *{id}" th:action="@{/admin/libros/{id}/eliminar(id=*{id})}" method="post" class="d-none">
+
+                        </form>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
-
+        <div layout:fragment="scripts">
+            <script>
+                function eliminarLibro(id){
+                    if(!confirm('Seguro que quieres eliminar esto??')){
+                        return;
+                    }
+                    $('#eliminarLibroForm' + id).submit();
+                }
+            </script>
+        </div>
 
 </body>
 </html>

@@ -103,4 +103,13 @@ public class AdminControlador {
         return new ModelAndView("redirect:/admin");
     }
 
+    @PostMapping("/libros/{id}/eliminar")
+    public String eliminarLibro(@PathVariable Integer id){
+        Libro libro = libroRepository.getOne(id);
+        libroRepository.delete(libro);
+        servicio.eliminarArchivo(libro.getRutaPortada());
+
+        return "redirect:/admin";
+    }
+
 }
