@@ -36,7 +36,7 @@ public class AdminControlador {
 
 
     @GetMapping("")
-    public ModelAndView verPaginaDeInicio(@PageableDefault(sort ="titulo", size = 5)Pageable pageable){
+    public ModelAndView verPaginaDeInicio(@PageableDefault(sort ="titulo", size = 4)Pageable pageable){
         Page<Libro> libros = libroRepository.findAll(pageable);
         return new ModelAndView("admin/index").addObject("libros", libros);
     }
@@ -44,7 +44,6 @@ public class AdminControlador {
     @GetMapping("/libros/nuevo")
     public ModelAndView mostrarFormularioDeNuevoLibro(){
         List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
-
         return new ModelAndView("admin/nuevo-libro")
                 .addObject("libro",new Libro())
                 .addObject("generos",generos);

@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sd="http://www.w3.org/1999/xhtml"
       layout:decorate="~{master.html}">
 <head>
     <meta charset="UTF-8">
     <title>administrar Biblioteca</title>
 
-    <!-- bibliotecas de Fancybox -->
+ 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-
 
 </head>
 <body>
 
 
     <div layout:fragment="content">
-        <div class="container my-5">
-            <h2>Libros</h2>
+        <h2>Libros</h2>
             <div class="text-end">
                 <a href="/admin/libros/nuevo" class="btn btn-primary mb-3">Agregar Libro</a>
             </div>
             <table class="table table-hover">
                 <thead>
-                <tr>
-                    <th></th>
-                    <th>Libros</th>
-                    <th>F.Publicacion</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th></th>
+                        <th>Libros</th>
+                        <th>F.Publicacion</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
                 <tr th:each="libro : ${libros}" th:object="${libro}">
@@ -42,24 +40,33 @@
                         <div th:text="*{titulo}" class="fs-5 fw-bold"></div>
                         <p th:text="*{sinopsis}"></p>
                         <div>
-                        <span class="badge rounded-pill bg-light text-dark me-1"
-                              th:each="genero : *{generos}" th:text="${genero.titulo}">
-                        </span>
+                            <span class="badge rounded-pill bg-light text-dark me-1"
+                                  th:each="genero : *{generos}" th:text="${genero.titulo}">
+                            </span>
                         </div>
                     </td>
-
                     <td th:text="*{#temporals.format(fechaPublicacion,'dd/MM/yyyy')}"></td>
                     <td class="text-end">
                         <a th:href="@{/admin/libros/{id}/editar(id=*{id})}">Editar</a>
                         <a href="javascript:void(0)" class="text-danger ms-3" th:onclick="'eliminarLibro(' + *{id} +')'">Eliminar</a>
                         <form th:id="'eliminarLibroForm' + *{id}" th:action="@{/admin/libros/{id}/eliminar(id=*{id})}" method="post" class="d-none">
-
                         </form>
                     </td>
                 </tr>
                 </tbody>
             </table>
-        </div>
+
+            <div class="row mt-5" th:with="page=${libros}">
+                <div class="col-sm-6">
+                    <div sd:pagination-sumary>
+                    </div>
+                    <div class="col-sm-6">
+                        <nav>
+                            <ul class="pagination" sd:pagination="full"></ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
     </div>
         <div layout:fragment="scripts">
             <script>
@@ -71,6 +78,7 @@
                 }
             </script>
         </div>
+
 
 </body>
 </html>

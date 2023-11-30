@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html layout:decorate="~{master.html}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sd="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+
+    <!-- bibliotecas de Fancybox
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    -->
+</head>
+<body>
+
+
+    <div layout:fragment="content">
+        <div class="bg-light p-5 rounded">
+            <h1 class="display-1 text-success">Bienvenido a la Libroteca</h1>
+            <h2>Disfruta de los mejores libros</h2>
+        </div>
+            <h4 class="text-danger mt-5">Ultimos agregados</h4>
+
+            <div class="row">
+                <div class="col-md-3 my-5" th:each="libro : ${ultimosLibros}" th:object="${libro}">
+                    <a th:href="@{/libros/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration:none;">
+                        <img th:src="@{/assets/{filename}(filename=*{rutaPortada})}" th:alt="*{titulo}" class="card-img-top">
+                        <div class="card-body">
+                            <h2 class="card-title fs-6" th:text="*{titulo}"></h2>
+                            <p th:text="*{#temporals.format(fechaPublicacion,'dd/MM/yyyy')}" class="text-muted small"></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+    </div>
+</body>
+</html>
